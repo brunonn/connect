@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <color name="white">#fff</color>
+
+    <color name="apricot">#ffcab1</color>
+    <color name="dutch">#ecdcb0</color>
+    <color name="tea">#c1d7ae</color>
+    <color name="darksea">#8cc084</color>
+    <color name="grey">#968e85</color>
+</resources>
