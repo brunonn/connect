@@ -5,7 +5,13 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.work.BackoffPolicy;
+import androidx.work.Constraints;
+import androidx.work.ExistingPeriodicWorkPolicy;
+import androidx.work.NetworkType;
+import androidx.work.OneTimeWorkRequest;
 import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 import androidx.work.WorkRequest;
 
 import android.Manifest;
@@ -51,18 +57,16 @@ public class MainActivity extends AppCompatActivity {
                     getLocationAccess();
                 }
             });
+    private WorkManager mWorkManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mWorkManager = WorkManager.getInstance(getApplication());
+        PeriodicWorkRequest workRequest = new PeriodicWorkRequest.Builder(LocationWorker.class, 15 , TimeUnit.MINUTES).build();
+        mWorkManager.enqueue(workRequest);
 
         authUserHandler();
-
-        WorkRequest saveRequest =
-                new PeriodicWorkRequest.Builder(UploadWorker.class,
-                        1, TimeUnit.HOURS,
-                        15, TimeUnit.MINUTES)
-                        .build();
     }
 
     protected void onRestart() {
